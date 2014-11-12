@@ -24,6 +24,14 @@ namespace Walmart.SDK.Core
 
         private string ApiKey = null;
 
+        private string TempFolderPath
+        {
+            get
+            {
+                return System.Configuration.ConfigurationManager.AppSettings["TempFolderPath"] ?? "";
+            }
+        }
+
         public WalmartClient(string apiKey)
         {
             ApiKey = apiKey;
@@ -70,7 +78,7 @@ namespace Walmart.SDK.Core
             }
 
             // Create a temp file
-            string filename = string.Format("{0}", Guid.NewGuid());
+            string filename = Path.Combine(TempFolderPath, string.Format("{0}", Guid.NewGuid()));
 
             // Save it to our file
             using (HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse())
